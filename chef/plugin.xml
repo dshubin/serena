@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <header>
+    <identifier id="com.serena.air.plugin.UCSC" name="UCSC-TEST" version="2"/>
+    <description>
+         Manage Chef
+    </description>
+    <tag>Serena/Third Party/Chef</tag>
+  </header>
+
+  <step-type name="Generic Knife Command">
+    <description>This step will allow you to execute any knife command onto the chef server.</description>
+    <properties>
+      <property name="Command" required="true">
+        <property-ui type="textBox" label="Enter Command" description="Enter Knife command you wish to run. The command 'knife client list' enter 'client list'"/>
+      </property>       
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="GenericCommand.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+    
+  </step-type>
+   <step-type name="Deploy chef">
+    <description>Deploy chef to a node.</description>
+    <properties>
+      <property name="query" required="true">
+        <property-ui type="textBox" label="Enter Query" description="Enter the query for nodes you want to deploy too."/>
+      </property>
+      <property name="sshLogin" required="true">
+        <property-ui type="textBox" label="Enter SSH Login" description="Enter the ssh login for the nodes."/>
+      </property>
+      <property name="sshPasswd" required="true">
+        <property-ui type="textBox" label="Enter SSH Password" description="Enter the ssh password for the login."/>
+      </property>
+      <property name="sudoPasswd">
+        <property-ui type="textBox" label="Enter Sudo Password" description="Enter the password to allow for sudo on the nodes. If no password is given, the ssh password will be used instead"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deployChef.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+</plugin>
