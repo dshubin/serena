@@ -62,4 +62,42 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
+
+<step-type name="Create Cookbook">
+    <description>Create a new Cookbook on the Chef server</description>
+    <properties>
+      <property name="createCookbookName" required="true">
+        <property-ui type="textBox" label="Cookbook Name" description="Enter the name of the Cookbook you want to create."/>
+      </property> 
+      <property name="createCookbookcopyrightHolder" required="false">
+        <property-ui type="textBox" label="Copyright Holder" description="Enter the name of the copyright holder for this cookbook."/>
+      </property>
+      <property name="createCookbookLicense" required="false">
+        <property-ui type="textBox" label="Type of license" description="Enter the type of license under which the cookbook is distributed."/>
+      </property> 
+      <property name="createCookbookEmail" required="false">
+        <property-ui type="textBox" label="Email of owner" description="Enter the email of the individual who maintains this cookbook."/>
+      </property>
+      <property name="createCookbookPath" required="false">
+        <property-ui type="textBox" label="Cookbook Path" description="Enter the directory where the cookbook will be created."/>
+      </property> 
+      <property name="createCookbookFormat" required="false">
+        <property-ui type="textBox" label="Documentation Format" description="Enter type of document format of the readme file."/>
+      </property>         
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createCookbook.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
 </plugin>
