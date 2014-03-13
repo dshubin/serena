@@ -12,7 +12,7 @@ try {
 }
 
 final def regex = props["regex"]
-final def purge = props["purge"]
+final def purge = props["purge"]?.toBoolean()
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();
