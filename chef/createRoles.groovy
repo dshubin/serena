@@ -22,7 +22,7 @@ def serr = new StringBuffer();
 def command = "knife role create ${roleName}";
 
 if(description){
-	command = command + " ${description}";
+	command = command + " --description ${description}";
 }
 
 def proc = command.execute();
