@@ -19,6 +19,10 @@ def serr = new StringBuffer();
 def deployCommand = “knife node delete ${name}”
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
+proc.withWriter { writer ->
+        writer << "y"
+}
+
 proc.waitFor()
 
 println “sout: ${sout}”

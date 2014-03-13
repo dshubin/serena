@@ -31,6 +31,10 @@ if(purge){
 def deployCommand = "knife cookbook delete ${name} ${version}${allCMD}${purgeCMD}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
+proc.withWriter { writer ->
+        writer << "y"
+}
+
 proc.waitFor()
 
 println "sout: ${sout}"
