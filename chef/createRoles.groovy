@@ -11,21 +11,25 @@ try {
 	    inputPropsStream.close();
 }
 
-final def name = props["name"]
+// Required Field
+final def roleName = props['roleName'];
+// Optionsal Fields
+final def description = props['description'];
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
-def deployCommand = “knife node delete ${name}”
-def proc = deployCommand.execute();
-proc.consumeProcessOutput(sout, serr);
-proc.withWriter { writer ->
-        writer << "y"
+def command = "knife role create ${roleName}";
+
+if(description){
+	command = command + " --description ${description}";
 }
 
-proc.waitFor()
+def proc = command.execute();
+proc.consumeProcessOutput(sout, serr);
+proc.waitFor();
 
-println “sout: ${sout}”
-println “serr: ${serr}”
+println “sout: ${sout}”;
+println “serr: ${serr}”;
 
 System.exit(0);
