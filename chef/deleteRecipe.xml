@@ -1,6 +1,6 @@
   <step-type name="Delete Recipe">
     <description>
-    This will delte a recipe at a given file location.
+    This will delete a recipe at a given file location.
     </description>
     <properties>
       <!-- Required Field -->
