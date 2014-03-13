@@ -1,0 +1,27 @@
+  <step-type name="Delete Recipe">
+    <description>
+    This will delte a recipe at a given file location.
+    </description>
+    <properties>
+      <!-- Required Field -->
+      <property name="filePath" required="true">  
+        <property-ui type="textBox" label="Recipe File Path" description="The file path of the recipe to be deleted"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deleteRecipe.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+    
+  </step-type>
