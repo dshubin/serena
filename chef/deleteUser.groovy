@@ -4,19 +4,19 @@ final def inputPropsStream = null;
 
 try {
 	inputPropsStream = new FileInputStream(inputPropsFile);
-    	props.load(inputPropsStream);
+	props.load(inputPropsStream);
 } catch (IOException e) {
-	throw new RuntimeException(e);
+    throw new RuntimeException(e);
 } finally {
-	    inputPropsStream.close();
+	inputPropsStream.close();
 }
 
-final def name = props["name"]
+final def name = props["user"]
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
-def deployCommand = “knife node delete ${name}”
+def deployCommand = "knife user delete ${user}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.withWriter { writer ->
@@ -25,7 +25,7 @@ proc.withWriter { writer ->
 
 proc.waitFor()
 
-println “sout: ${sout}”
-println “serr: ${serr}”
+println "sout: ${sout}"
+println "serr: ${serr}"
 
 System.exit(0);

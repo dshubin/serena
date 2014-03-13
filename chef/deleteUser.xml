@@ -1,11 +1,11 @@
-  <step-type name="Delete Recipe">
+  <step-type name="Delete User">
     <description>
-    This will delete a recipe at a given file location.
+    This will delete the user specified.
     </description>
     <properties>
       <!-- Required Field -->
-      <property name="filePath" required="true">  
-        <property-ui type="textBox" label="Recipe File Path" description="The file path of the recipe to be deleted"/>
+      <property name="user" required="true">  
+        <property-ui type="textBox" label="User Name" description="The name of the user to be deleted"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -19,7 +19,7 @@
     </post-processing>
 
     <command program="${GROOVY_HOME}/bin/groovy">
-      <arg file="deleteRecipe.groovy"/>
+      <arg file="deleteUser.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
