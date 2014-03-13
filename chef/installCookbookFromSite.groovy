@@ -14,11 +14,11 @@ try {
 // Required Field
 final def cookbookName = props['cookbookName'];
 // Optionsal Fields
-final def cookbookVersion = props['cookbookVersion'];
-final def useCurrentBranch = props['useCurrentBranch'];
-final def defaultBranchName= props['defaultBranchName'];
-final def skipDependencies = props['skipDependencies'];
-final def path = props['path'];
+final def cookbookVersion = props['cookbookVersion']?:'';
+final def useCurrentBranch = props['useCurrentBranch']?.toBoolean();
+final def defaultBranchName= props['defaultBranchName']?:'';
+final def skipDependencies = props['skipDependencies']?.toBoolean();
+final def path = props['path']?:'';
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();

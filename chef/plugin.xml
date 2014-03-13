@@ -8,6 +8,442 @@
     <tag>Serena/Third Party/Chef</tag>
   </header>
 
+  <step-type name="Add Node Run-List">
+    <description> Add to the run-list of a Node by adding recipes or roles in a specific order.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="Node Name" description="Name of the node you wish to update."/>
+      </property>      
+      <property name="runList" required="true">  
+        <property-ui type="textBox" label="Run-List Item" description="A comma seperate list of roles and recipes you want to add. roles are entered as 'role[ROLE_NAME]'. The full recipe format is 'recipe[COOKBOOK::RECIPE_NAME]'. Recipes can also be added with a cookbook by 'COOKBOOK::RECIPE_NAME'. Lastly, the default recipe can be added by 'COOKBOOK'"/>
+      </property>      
+      <property name="after">  
+        <property-ui type="textBox" label="After Item" description="Add the run-list item after the specified item."/>
+      </property>      
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="addRunList.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command> 
+  </step-type>
+
+<step-type name="Bulk Delete Clients">
+  <description> This will delete clientss in bulk.</description>
+  <properties>
+    <property name="regex" required="true">  
+      <property-ui type="textBox" label="Enter regular expression" description="Regular expression to delete multiple cookbooks."/>
+    </property>      
+  </properties>
+  <post-processing><![CDATA[
+      if (properties.get("exitCode") != 0) {
+          properties.put("Status", "Failure");
+      }
+      else {
+          properties.put("Status", "Success");
+      }
+   ]]></post-processing>
+
+  <command program="${GROOVY_HOME}/bin/groovy">
+    <arg file="bulkDeleteClient.groovy"/>
+    <arg file="${PLUGIN_INPUT_PROPS}"/>
+    <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+  </command>
+</step-type>
+
+<step-type name="Bulk Delete Cookbooks">
+  <description> This will delete cookbooks in bulk.</description>
+  <properties>
+    <property name="regex" required="true">  
+      <property-ui type="textBox" label="Enter regular expression" description="Regular expression to delete multiple cookbooks."/>
+    </property>      
+    <property name="purge">  
+      <property-ui type="checkBox" label="Purge" description="Optional. Completly remove cookbooks from the server."/>
+    </property>     
+  </properties>
+  <post-processing><![CDATA[
+      if (properties.get("exitCode") != 0) {
+          properties.put("Status", "Failure");
+      }
+      else {
+          properties.put("Status", "Success");
+      }
+   ]]></post-processing>
+
+  <command program="${GROOVY_HOME}/bin/groovy">
+    <arg file="bulkDeleteCookbook.groovy"/>
+    <arg file="${PLUGIN_INPUT_PROPS}"/>
+    <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+  </command>
+</step-type>
+
+<step-type name="Bulk Delete Nodes">
+  <description> This will delete nodes in bulk.</description>
+  <properties>
+    <property name="regex" required="true">  
+      <property-ui type="textBox" label="Enter regular expression" description="Regular expression to delete multiple nodes."/>
+    </property>      
+  </properties>
+  <post-processing><![CDATA[
+      if (properties.get("exitCode") != 0) {
+          properties.put("Status", "Failure");
+      }
+      else {
+          properties.put("Status", "Success");
+      }
+   ]]></post-processing>
+
+  <command program="${GROOVY_HOME}/bin/groovy">
+    <arg file="bulkDeleteNode.groovy"/>
+    <arg file="${PLUGIN_INPUT_PROPS}"/>
+    <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+  </command>
+</step-type>
+
+  <step-type name="Create Client">
+    <description> Create a client.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="Client name" description="Name of the client you wish to create."/>
+      </property>      
+      <property name="admin">  
+        <property-ui type="checkBox" label="Admin" description="Check to make client admin."/>
+      </property>      
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createClient.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+<step-type name="Create Recipe">
+    <description> Create a recipe.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="Recipe name" description="Name of the recipe you wish to create."/>
+      </property>      
+      <property name="path" required="true">  
+        <property-ui type="textBox" label="Recipe path" description="Path to the location where the recipe will be saved."/>
+      </property>      
+      <property name="contents" required="true">  
+        <property-ui type="textAreaBox" label="Recipe contents" description="The code that will go into the recipe."/>
+      </property>      
+      <property name="overwrite">  
+        <property-ui type="checkBox" label="Overwrite" description="If selected, overwrite the recipe if it exists."/>
+      </property>      
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createRecipe.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+  <step-type name="Create Roles">
+    <description>
+    This will create a new role. A role is a way to define certain patterns and processes that exist across nodes in an organization as belonging to a single job function.
+    </description>
+    <properties>
+      <!-- Required Field -->
+      <property name="roleName" required="true">  
+        <property-ui type="textBox" label="Role Name" description="The name of the role to be created"/>
+      </property>
+      <!-- Optional Field -->
+      <property name="description" required="true">  
+        <property-ui type="textAreaBox" label="Role Description" description="The description of the role. This value will populate the description field for the role on the server."/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createRoles.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>  
+  </step-type>
+
+  <step-type name="Create User">
+    <description> Create a user.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="User name" description="Name of the user you wish to create."/>
+      </property>      
+      <property name="admin">  
+        <property-ui type="checkBox" label="Admin" description="Check to make user admin."/>
+      </property> 
+
+      <property name="fileName">  
+        <property-ui type="textBox" label="Path to private key" description="Filename in which to save the private key."/>
+      </property>     
+
+      <property name="password">  
+        <property-ui type="textBox" label="Password" description="The user password."/>
+      </property>
+
+      <property name="userKey">  
+        <property-ui type="textBox" label="Path to public key" description="Used to write the public key to a file."/>
+      </property>
+
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createUser.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command> 
+  </step-type>
+
+
+  <step-type name="Delete Client">
+    <description>
+    This will delete a client at a given file location.
+    </description>
+    <properties>
+      <!-- Required Field -->
+      <property name="Client" required="true">  
+        <property-ui type="textBox" label="Client Name" description="The name of the client to be deleted"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deleteClient.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+
+<step-type name="Delete Cookbook">
+  <description> This will be used to delete one or more cookbooks.</description>
+  <properties>
+    <property name="name" required="true">  
+      <property-ui type="textBox" label="Enter cookbook name" description="Deletes the given cookbook."/>
+    </property>      
+    <property name="version">  
+      <property-ui type="textBox" label="Version" description="Optional. Enter the version of the cookbook you want to delete."/>
+    </property>     
+    <property name="all">  
+      <property-ui type="checkBox" label="Delete All" description="Optional. Delete every version of the cookbook."/>
+    </property> 
+    <property name="purge">  
+      <property-ui type="checkBox" label="Purge" description="Optional. Completely remove cookbook from the server."/>
+    </property> 
+  </properties>
+  <post-processing><![CDATA[
+      if (properties.get("exitCode") != 0) {
+          properties.put("Status", "Failure");
+      }
+      else {
+          properties.put("Status", "Success");
+      }
+   ]]></post-processing>
+
+  <command program="${GROOVY_HOME}/bin/groovy">
+    <arg file="deleteCookbook.groovy"/>
+    <arg file="${PLUGIN_INPUT_PROPS}"/>
+    <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+  </command>
+</step-type>
+
+<step-type name="Delete Node">
+  <description> This will be used to delete a node.</description>
+  <properties>
+    <property name="name" required="true">  
+      <property-ui type="textBox" label="Enter node name" description="Deletes the given node."/>
+    </property>           
+  </properties>
+  <post-processing><![CDATA[
+      if (properties.get("exitCode") != 0) {
+          properties.put("Status", "Failure");
+      }
+      else {
+          properties.put("Status", "Success");
+      }
+   ]]></post-processing>
+
+  <command program="${GROOVY_HOME}/bin/groovy">
+    <arg file="deleteNode.groovy"/>
+    <arg file="${PLUGIN_INPUT_PROPS}"/>
+    <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+  </command> 
+</step-type>
+
+  <step-type name="Delete Recipe">
+    <description>
+    This will delte a recipe at a given file location.
+    </description>
+    <properties>
+      <!-- Required Field -->
+      <property name="filePath" required="true">  
+        <property-ui type="textBox" label="Recipe File Path" description="The file path of the recipe to be deleted"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deleteRecipe.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+  <step-type name="Delete User">
+    <description>
+    This will delete the user specified.
+    </description>
+    <properties>
+      <!-- Required Field -->
+      <property name="user" required="true">  
+        <property-ui type="textBox" label="User Name" description="The name of the user to be deleted"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deleteUser.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+  <step-type name="Install Cookbook From Site">
+    <description>
+    	This step allows the user to install a Chef cookbooks from the 
+    	cookbooks community hosted at http://community.opscode.com/. 
+    </description>
+    <properties>
+      <!-- Required Field -->
+      <property name="cookbookName" required="true">  
+        <property-ui type="textBox" label="Cookbook Name" description="The name of the cookbook to be installed"/>
+      </property>
+      <!-- Optional Fields -->
+      <property name="cookbookVersion" required="false">
+        <property-ui type="textBox" label="Cookbook Version" description="The version of the cookbook to be installed"/>
+      </property>     
+      <property name="useCurrentBranch" required="false">
+        <property-ui type="checkBox" label="Use Current Branch" description="Indicates that the current branch will be used."/>
+      </property>
+      <property name="defaultBranchName" required="false">
+        <property-ui type="textBox" label="Default Branch Name" description="The name of the default branch. This will default to the master branch"/>
+      </property>
+      <property name="skipDependencies" required="false">
+        <property-ui type="checkBox" label="Skip Dependencies" description="Indicates that all cookbooks to which the installed cookbook has a dependency will not be installed"/>
+      </property>
+      <property name="path" required="false">
+        <property-ui type="testField" label="Cookbook Installation Path" description="The directory in which the cookbook will be created. This can be colon separated path."/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="installCookbookFromSite.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>  
+  </step-type>
+
+  <step-type name="Remove Node Run-List">
+    <description> Remove from the run-list of a Node.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="Node Name" description="Name of the node you wish to update."/>
+      </property>      
+      <property name="runList" required="true">  
+        <property-ui type="textBox" label="Run-List Item" description="A comma seperate list of roles and recipes you want to remove. roles are entered as 'role[ROLE_NAME]'. The full recipe format is 'recipe[COOKBOOK::RECIPE_NAME]'. Recipes can also be added with a cookbook by 'COOKBOOK::RECIPE_NAME'. Lastly, the default recipe can be added by 'COOKBOOK'"/>
+      </property>      
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="removeRunList.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>  
+  </step-type>
+
   <step-type name="Generic Knife Command">
     <description>This step will allow you to execute any knife command onto the chef server.</description>
     <properties>
@@ -96,6 +532,99 @@
 
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg file="createCookbook.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+<step-type name="Upload Cookbook">
+    <description>Upload a cookbook, role, environment, or data bag to the Chef server</description>
+    <properties>
+      <property name="uploadCookbookPattern" required="true">
+        <property-ui type="textBox" label="Path to item(s) to upload" description="Path to the cookbook, role, environment, or databag."/>
+      </property> 
+      <property name="uploadConcurrency" required="false">
+        <property-ui type="textBox" label="Number of concurrent connections allowed" description="This is the maximum number of concurrent connections allowed. If left blank, the default is 10."/>
+      </property> 
+      <property name="uploadDiff" required="false">
+        <property-ui type="checkBox" default-value="true" label="Upload only new or modified files" description="If checked, only upload new or modified files to the server."/>
+      </property>
+      <property name="uploadForce" required="false">
+        <property-ui type="checkBox" label="Force upload of unmodified files" description="Check this to force of the upload of files even if they have not been modified."/>
+      </property> 
+      <property name="uploadFreeze" required="false">
+        <property-ui type="checkBox" label="Do not allow modifications" description="Indicates a cookbook cannot be modified. Any changes to this cookbook must be uploaded later as a new version."/>
+      </property> 
+      <property name="uploadDryRun" required="false">
+        <property-ui type="checkBox" label="Do a dry run" description="Indicates that no action is taken and only results are printed out."/>
+      </property>
+      <property name="uploadPurge" required="false">
+        <property-ui type="checkBox" label="Purge files on server that are not in the Chef repo" description="Deletes roles, cookbooks, etc. on the server that are NOT contained in the Chef repo."/>
+      </property>
+      <property name="uploadRecurse" required="false">
+        <property-ui type="checkBox" label="Disable recursive uploading of the directory" description="Disables the recursive uploading of the directory."/>
+      </property>  
+      <property name="uploadRepoMode" required="false">
+        <property-ui type="textBox" label="Local Chef-repo Layout" description="This is the layout of the local chef repo. Possible values are: static, everything, or hosted_everything."/>
+      </property>           
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="uploadCookbook.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+<step-type name="Delete a Role">
+    <description>Delete a single role.</description>
+    <properties>
+      <property name="deleteRoleName" required="true">
+        <property-ui type="textBox" label="Role Name" description="This is the name of the role which will be deleted."/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deleteRole.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  
+   <step-type name="Delete Bulk Roles">
+    <description>Delete a set of roles.</description>
+    <properties>
+      <property name="deleteRoleREGEX" required="true">
+        <property-ui type="textBox" label="Regular Expression" description="This is the regular expression which will define which role to delete."/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="deleteRoleBulk.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>

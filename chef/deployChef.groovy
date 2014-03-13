@@ -17,7 +17,7 @@ try {
 final def query = props["query"];
 final def sshLogin = props["sshLogin"]
 final def sshPasswd = props["sshPasswd"]
-def sudoPasswd = props["sudoPasswd"]
+def sudoPasswd = props["sudoPasswd"]?:''
 
 // If no sudo password given, attemt deploy with ssh password as sudo password
 if (sudoPasswd == ""){
