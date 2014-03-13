@@ -12,9 +12,9 @@ try {
 }
 
 final def name = props["name"]
-final def version = props["version"]
-final def all = props["all"]
-final def purge = props["purge"]
+final def version = props["version"]?:''
+final def all = props["all"]?.toBoolean()
+final def purge = props["purge"]?.toBoolean()
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();

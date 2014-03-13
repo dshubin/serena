@@ -12,10 +12,10 @@ try {
 }
 
 final def name = props["name"]
-final def fileName = props["fileName"] 
+final def fileName = props["fileName"]?:''
 final def admin = props["admin"]?.toBoolean()
-final def password = props["password"]
-final def userKey = props["userKey"]
+final def password = props["password"]?:''
+final def userKey = props["userKey"]?:''
 
 def sout = new StringBuffer()
 def serr = new StringBuffer()
