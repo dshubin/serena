@@ -1,0 +1,32 @@
+<step-type name="Delete Cookbook">
+  <description> This will be used to delete one or more cookbooks.</description>
+  <properties>
+    <property name="name" required="true">  
+      <property-ui type="textBox" label="Enter cookbook name" description="Deletes the given cookbook."/>
+    </property>      
+    <property name="version">  
+      <property-ui type="textBox" label="Version" description="Optional. Enter the version of the cookbook you want to delete."/>
+    </property>     
+    <property name="all">  
+      <property-ui type="checkBox" label="Delete All" description="Optional. Delete every version of the cookbook."/>
+    </property> 
+    <property name="purge">  
+      <property-ui type="checkBox" label="Purge" description="Optional. Completely remove cookbook from the server."/>
+    </property> 
+  </properties>
+  <post-processing><![CDATA[
+      if (properties.get("exitCode") != 0) {
+          properties.put("Status", "Failure");
+      }
+      else {
+          properties.put("Status", "Success");
+      }
+   ]]></post-processing>
+
+  <command program="${GROOVY_HOME}/bin/groovy">
+    <arg file="deleteCookbook.groovy"/>
+    <arg file="${PLUGIN_INPUT_PROPS}"/>
+    <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+  </command>
+  
+</step-type>
