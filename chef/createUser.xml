@@ -1,0 +1,40 @@
+  <step-type name="Create User">
+    <description> Create a user.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="User name" description="Name of the user you wish to create."/>
+      </property>      
+      <property name="admin">  
+        <property-ui type="checkBox" label="Admin" description="Check to make user admin."/>
+      </property> 
+
+      <property name="fileName">  
+        <property-ui type="textBox" label="Path to private key" description="Filename in which to save the private key."/>
+      </property>     
+
+      <property name="password">  
+        <property-ui type="textBox" label="Password" description="The user password."/>
+      </property>
+
+      <property name="userKey">  
+        <property-ui type="textBox" label="Path to public key" description="Used to write the public key to a file."/>
+      </property>
+
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createUser.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command> 
+  </step-type>
+
+
