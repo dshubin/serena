@@ -624,7 +624,7 @@
     </command>
   </step-type>
 
-<step-type name="Upload Cookbook">
+<step-type name="Upload">
     <description>Upload a cookbook, role, environment, or data bag to the Chef server</description>
     <properties>
       <property name="uploadCookbookPattern" required="true">
@@ -665,7 +665,7 @@
      ]]></post-processing>
 
     <command program="${GROOVY_HOME}/bin/groovy">
-      <arg file="uploadCookbook.groovy"/>
+      <arg file="upload.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
