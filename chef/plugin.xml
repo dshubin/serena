@@ -95,7 +95,7 @@
   
 </step-type>
 
-  <step-type name="Add Node Run-List">
+  <step-type name="Run-List Add">
     <description> Add to the run-list of a Node by adding recipes or roles in a specific order.</description>
     <properties>
       <property name="name" required="true">  
@@ -124,7 +124,7 @@
     </command> 
   </step-type>
 
-<step-type name="Bulk Delete Clients">
+<step-type name="Delete Clients Bulk">
   <description> This will delete clientss in bulk.</description>
   <properties>
     <property name="regex" required="true">  
@@ -173,7 +173,7 @@
   </command>
 </step-type>
 
-<step-type name="Bulk Delete Nodes">
+<step-type name="Delete Nodes Bulk">
   <description> This will delete nodes in bulk.</description>
   <properties>
     <property name="regex" required="true">  
@@ -228,7 +228,7 @@
     </command>
   </step-type>
 
-  <step-type name="Create Roles">
+  <step-type name="Create Role">
     <description>
     This will create a new role. A role is a way to define certain patterns and processes that exist across nodes in an organization as belonging to a single job function.
     </description>
@@ -258,8 +258,8 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>  
   </step-type>
-
-  <step-type name="Create User">
+<!--
+  <step-type name=" User">
     <description> Create a user.</description>
     <properties>
       <property name="name" required="true">  
@@ -297,7 +297,7 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command> 
   </step-type>
-
+-->
 
   <step-type name="Delete Client">
     <description>
@@ -479,7 +479,7 @@
     </command>  
   </step-type>
 
-  <step-type name="Remove Node Run-List">
+  <step-type name="Run-List Remove">
     <description> Remove from the run-list of a Node.</description>
     <properties>
       <property name="name" required="true">  
@@ -648,7 +648,7 @@
     </command>
   </step-type>
 
-<step-type name="Delete a Role">
+<step-type name="Delete Role">
     <description>Delete a single role.</description>
     <properties>
       <property name="deleteRoleName" required="true">
@@ -671,7 +671,7 @@
     </command>
   </step-type>
   
-   <step-type name="Delete Bulk Roles">
+   <step-type name="Delete Roles Bulk">
     <description>Delete a set of roles.</description>
     <properties>
       <property name="deleteRoleREGEX" required="true">
