@@ -10,11 +10,9 @@ try {
 } finally {
 	    inputPropsStream.close();
 }
-    	
-// @param deployCommand = knife ssh "nodeName" "sudo chef-client"
 	
 // name of the node to deploy on
-final def query = props["target"];
+final def target = props["target"];
 final def forwarding = props["forwarding"]?.toBoolean()
 final def proxyUrl = props["proxyUrl"]?:''
 final def version = props["version"]?:''
@@ -36,13 +34,15 @@ final def sudoPassword = props["sudoPassword"]?:''
 final def myTemplate = props["template"]?:''
 final def useSudoPassword = props["useSudoPassword"]?.toBoolean()
 final def user = props["user"]?:''
+
+
 // command to be executed
 def deployCommand = "knife bootstrap ${target}";
 if(forwarding){
-	deployCommnad = deployCommand + " -A"
+	deployCommand = deployCommand + " -A"
 }
 if(proxyUrl){
-	deployCommnad = deployCommand + " --bootstrap-proxy ${proxyUrl}"
+	deployCommand = deployCommand + " --bootstrap-proxy ${proxyUrl}"
 }
 if(version){
 	deployCommand = deployCommand + " --bootstrap-version ${version}"
@@ -63,9 +63,9 @@ if(jsonAttr){
 	deployCommand = deployCommand + " -j ${jsonAttr}"
 }
 if(nodeName){
-	deployCommand = deployCommand + " -N ${nodename}"
+	deployCommand = deployCommand + " -N ${nodeName}"
 }
-if(!hostkeyVerify){
+if(!hostKeyVerify){
 	deployCommand = deployCommand + " --no-host-key-verify"
 }
 if(port){
@@ -99,6 +99,8 @@ if(user){
 	deployCommand = deployCommand + " -x ${user}"
 }
 
+println deployCommand;
+
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 def proc = deployCommand.execute();
@@ -109,6 +111,7 @@ if(sudo && !useSudoPassword){
 	}
 }
 proc.waitFor();
+
 
 println "sout: ${sout}"
 println "serr: ${serr}"

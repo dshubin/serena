@@ -13,7 +13,7 @@ try {
 
 // Required Field
 final def cookbookName = props['cookbookName'];
-// Optionsal Fields
+// Optional Fields
 final def cookbookVersion = props['cookbookVersion']?:'';
 final def useCurrentBranch = props['useCurrentBranch']?.toBoolean();
 final def defaultBranchName= props['defaultBranchName']?:'';
@@ -45,7 +45,7 @@ def proc = command.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.waitFor();
 
-println “sout: ${sout}”;
-println “serr: ${serr}”;
+println "sout: ${sout}";
+println "serr: ${serr}";
 
 System.exit(0);

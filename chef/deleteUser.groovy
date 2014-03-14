@@ -16,7 +16,7 @@ final def name = props["user"]
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
-def deployCommand = "knife user delete ${user}"
+def deployCommand = "knife user delete ${name}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.withWriter { writer ->

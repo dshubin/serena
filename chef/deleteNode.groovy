@@ -11,12 +11,12 @@ try {
 	    inputPropsStream.close();
 }
 
-final def name = props["name"]
+final def name = props['nodeName']
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
-def deployCommand = “knife node delete ${name}”
+def deployCommand = "knife node delete ${name}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.withWriter { writer ->
@@ -25,7 +25,7 @@ proc.withWriter { writer ->
 
 proc.waitFor()
 
-println “sout: ${sout}”
-println “serr: ${serr}”
+println "sout: ${sout}"
+println "serr: ${serr}"
 
 System.exit(0);

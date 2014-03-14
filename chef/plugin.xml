@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.serena.air.plugin.UCSC" name="UCSC-TEST" version="2"/>
+    <identifier id="com.serena.air.plugin.UCSC" name="Chef" version="1"/>
     <description>
          Manage Chef
     </description>
@@ -60,7 +60,7 @@
       <property-ui type="textAreaBox" label="Secret" description="The encryption key that is used for values contained within a data bag item."/>
     </property>      
     <property name="secretFile">  
-      <property-ui type="textBox" label="Secrete File" description="The path to the file that contains the encryption key."/>
+      <property-ui type="textBox" label="Secret File" description="The path to the file that contains the encryption key."/>
     </property>      
     <property name="sudo">
       <property-ui type="checkBox" label="Sudo" description="Check to have bootstrap operation execute using sudo."/>
@@ -88,7 +88,7 @@
    ]]></post-processing>
 
   <command program="${GROOVY_HOME}/bin/groovy">
-    <arg file="bulkDeleteClient.groovy"/>
+    <arg file="bootstrap.groovy"/>
     <arg file="${PLUGIN_INPUT_PROPS}"/>
     <arg file="${PLUGIN_OUTPUT_PROPS}"/>
   </command>
@@ -259,6 +259,45 @@
     </command>  
   </step-type>
 
+  <step-type name="Create User">
+    <description> Create a user.</description>
+    <properties>
+      <property name="name" required="true">  
+        <property-ui type="textBox" label="User name" description="Name of the user you wish to create."/>
+      </property>      
+      <property name="admin">  
+        <property-ui type="checkBox" label="Admin" description="Check to make user admin."/>
+      </property> 
+
+      <property name="fileName">  
+        <property-ui type="textBox" label="Path to private key" description="Filename in which to save the private key."/>
+      </property>     
+
+      <property name="password">  
+        <property-ui type="textBox" label="Password" description="The user password."/>
+      </property>
+
+      <property name="userKey">  
+        <property-ui type="textBox" label="Path to public key" description="Used to write the public key to a file."/>
+      </property>
+
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put("Status", "Failure");
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg file="createUser.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command> 
+  </step-type>
+
 
   <step-type name="Delete Client">
     <description>
@@ -323,7 +362,7 @@
 <step-type name="Delete Node">
   <description> This will be used to delete a node.</description>
   <properties>
-    <property name="name" required="true">  
+    <property name="nodeName" required="true">  
       <property-ui type="textBox" label="Enter node name" description="Deletes the given node."/>
     </property>           
   </properties>

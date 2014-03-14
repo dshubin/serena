@@ -25,7 +25,10 @@ if(purge){
 def deployCommand = "knife cookbook bulk delete ${regex}${purgeCMD}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
-proc.waitFor()
+proc.withWriter { writer ->
+	writer << "y";
+}
+proc.waitFor();
 
 println "sout: ${sout}"
 println "serr: ${serr}"

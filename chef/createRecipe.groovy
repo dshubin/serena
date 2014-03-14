@@ -19,7 +19,7 @@ final def overwrite = props["overwrite"]?.toBoolean()
 def filePath = path + name
 
 try {
-    def file = new File(path).canonicalFile
+    def file = new File(filePath).canonicalFile
     if (file.exists() && !overwrite) {
         println "File $file already exists!"
         System.exit 1

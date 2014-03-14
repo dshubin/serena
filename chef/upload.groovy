@@ -53,7 +53,7 @@ if(props['uploadRepoMode'] != "")
 final def options = "${uploadCookbookCon} ${uploadCookbookDi} ${uploadCookbookFo} ${uploadCookbookFr} ${uploadCookbookDr} ${uploadCookbookPu} ${uploadCookbookRec} ${uploadCookbookRepo}";
 final def command = "knife upload ${pattern} ${options}";
 
-def proc = command.execute(null, workingDir);
+def proc = command.execute(null, new File(workingDir));
 proc.consumeProcessOutput(sout, serr);
 proc.waitFor();
 
