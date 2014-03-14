@@ -566,7 +566,7 @@
       <property name="createCookbookName" required="true">
         <property-ui type="textBox" label="Cookbook Name" description="Enter the name of the Cookbook you want to create."/>
       </property> 
-      <property name="createCookbookcopyrightHolder" required="false">
+      <property name="createCookbookCopyrightHolder" required="false">
         <property-ui type="textBox" label="Copyright Holder" description="Enter the name of the copyright holder for this cookbook."/>
       </property>
       <property name="createCookbookLicense" required="false">
