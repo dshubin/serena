@@ -22,4 +22,4 @@ try {
 	System.err << e.getMessage();
 }
 
-System.exit(0);
+System.exit(proc.exitValue());
