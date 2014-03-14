@@ -486,7 +486,7 @@
         <property-ui type="checkBox" label="Skip Dependencies" description="Indicates that all cookbooks to which the installed cookbook has a dependency will not be installed"/>
       </property>
       <property name="path" required="false">
-        <property-ui type="testField" label="Cookbook Installation Path" description="The directory in which the cookbook will be created. This can be colon separated path."/>
+        <property-ui type="textBox" label="Cookbook Installation Path" description="The directory in which the cookbook will be created. This can be colon separated path."/>
       </property>
     </properties>
     <post-processing><![CDATA[
