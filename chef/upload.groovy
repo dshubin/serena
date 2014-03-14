@@ -12,6 +12,7 @@ try {
 }
 //required
 final def pattern = props['uploadCookbookPattern'];
+final def workingDir = props['workingDir'];
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
@@ -52,7 +53,7 @@ if(props['uploadRepoMode'] != "")
 final def options = "${uploadCookbookCon} ${uploadCookbookDi} ${uploadCookbookFo} ${uploadCookbookFr} ${uploadCookbookDr} ${uploadCookbookPu} ${uploadCookbookRec} ${uploadCookbookRepo}";
 final def command = "knife upload ${pattern} ${options}";
 
-def proc = command.execute();
+def proc = command.execute(null, workingDir);
 proc.consumeProcessOutput(sout, serr);
 proc.waitFor();
 

@@ -196,32 +196,6 @@
   </command>
 </step-type>
 
-  <step-type name="Create Client">
-    <description> Create a client.</description>
-    <properties>
-      <property name="name" required="true">  
-        <property-ui type="textBox" label="Client name" description="Name of the client you wish to create."/>
-      </property>      
-      <property name="admin">  
-        <property-ui type="checkBox" label="Admin" description="Check to make client admin."/>
-      </property>      
-    </properties>
-    <post-processing><![CDATA[
-        if (properties.get("exitCode") != 0) {
-            properties.put("Status", "Failure");
-        }
-        else {
-            properties.put("Status", "Success");
-        }
-     ]]></post-processing>
-
-    <command program="${GROOVY_HOME}/bin/groovy">
-      <arg file="createClient.groovy"/>
-      <arg file="${PLUGIN_INPUT_PROPS}"/>
-      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
-    </command>
-  </step-type>
-
 <step-type name="Create Recipe">
     <description> Create a recipe.</description>
     <properties>
@@ -628,7 +602,10 @@
     <description>Upload a cookbook, role, environment, or data bag to the Chef server</description>
     <properties>
       <property name="uploadCookbookPattern" required="true">
-        <property-ui type="textBox" label="Path to item(s) to upload" description="Path to the cookbook, role, environment, or databag."/>
+        <property-ui type="textBox" label="Pattern" description="Patern to upload."/>
+      </property> 
+      <property name="workingDir" required="true">
+        <property-ui type="textBox" label="Directory" description="Directory to run the command from"/>
       </property> 
       <property name="uploadConcurrency" required="false">
         <property-ui type="textBox" label="Number of concurrent connections allowed" description="This is the maximum number of concurrent connections allowed. If left blank, the default is 10."/>
