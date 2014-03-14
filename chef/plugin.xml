@@ -147,7 +147,7 @@
   </command>
 </step-type>
 
-<step-type name="Bulk Delete Cookbooks">
+<step-type name="Delete Cookbooks Bulk">
   <description> This will delete cookbooks in bulk.</description>
   <properties>
     <property name="regex" required="true">  
