@@ -48,4 +48,4 @@ proc.waitFor();
 println "sout: ${sout}";
 println "serr: ${serr}";
 
-System.exit(0);
+System.exit(proc.exitValue());
