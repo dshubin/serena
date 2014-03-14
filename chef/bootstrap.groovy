@@ -99,8 +99,6 @@ if(user){
 	deployCommand = deployCommand + " -x ${user}"
 }
 
-println deployCommand;
-
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 def proc = deployCommand.execute();
@@ -116,5 +114,5 @@ proc.waitFor();
 println "sout: ${sout}"
 println "serr: ${serr}"
 
-System.exit(0);
+System.exit(proc.exitValue());
     
