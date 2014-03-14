@@ -15,7 +15,7 @@ final def name = props['createCookbookName'];
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
-def CRH = "";
+def crh = "";
 def license = "";
 def email = "";
 def path = "";
@@ -23,7 +23,7 @@ def format = "";
 
 //optional
 if(props['createCookbookCopyrightHolder'] != "")
-	CRH = " -C " + props['createCookbookcopyrightHolder'];
+	crh = " -C " + props['createCookbookCopyrightHolder'];
 
 if(props['createCookbookLicense'] != "")
 	license = " -I " + props['createCookbookLicense'];
@@ -37,7 +37,7 @@ if(props['createCookbookPath'] != "")
 if(props['createCookbookFormat'] != "")
 	format = " -r " + props['createCookbookFormat'];
 
-final def options = "${CRH} ${license} ${email} ${path} ${format}";
+final def options = "${crh} ${license} ${email} ${path} ${format}";
 
 final def command = "knife cookbook create ${name} ${options}";
 
