@@ -13,69 +13,69 @@
   <properties>
     <property name="target" required="true">  
       <property-ui type="textBox" label="FQDN or IP address" description="FQDN or IP address of target computer."/>
-    </property>      
-    <property name="forwarding">  
-      <property-ui type="checkBox" label="SSH forwarding" description="Check to indaicated that SSh agent forwarding is enabled."/>
-    </property>      
-    <property name="proxyUrl">  
-      <property-ui type="textBox" label="Proxy Url" description="The proxy server for the node that is the target of a bootstrap operation."/>
-    </property>      
-    <property name="version">  
-      <property-ui type="textBox" label="Chef Version" description="The version of the chef-client to install."/>
-    </property>      
-    <property name="distro">  
-      <property-ui type="textBox" label="Distributions" description="The template file to be used during a bootstrap operation. The following distributions are supported: chef-full (the default bootstrap), centos5-gems, fedora13-gems, ubuntu10.04-gems, ubuntu10.04-apt, ubuntu12.04-gems, and the name of a custom bootstrap template file. When this option is used, Knife will search for the template file in the following order: the bootstrap/ folder in the current working directory, the bootstrap/ folder in the chef-repo, the bootstrap/ folder in the ~/.chef/ directory, or a default bootstrap file. Do not use the --template-file option when --distro is specified."/>
-    </property>      
-    <property name="gateway">  
-      <property-ui type="textBox" label="SSH Gateway" description="The SSH tunnel or gateway that is used to run a bootstrap action on a machine that is not accessible from the workstation."/>
-    </property>      
-    <property name="hint">  
-      <property-ui type="textBox" label="Hint" description="HINT_NAME[=HINT_FILE] An Ohai hint to be set on the target of the bootstrap. The hint is contained in a file and is formatted as JSON: {'attribute':'value','attribute':'value'...}. HINT_NAME is the name of the hint and HINT_FILE is the name of the hint file located at /etc/chef/ohai/hints/HINT_FILE.json. Use multiple --hint options in the command to specify multiple hints."/>
-    </property>      
-    <property name="identity">  
-      <property-ui type="textBox" label="Identity File" description="The SSH identity file used for authentication. Key-based authentication is recommended."/>
-    </property>      
-    <property name="jsonAttr">  
-      <property-ui type="textAreaBox" label="Json Attributes" description="A JSON string that is added to the first run of a chef-client."/>
-    </property>      
-    <property name="name">  
-      <property-ui type="textBox" label="Node Name" description="The name of the node."/>
-    </property>      
-    <property name="hostKeyVerify">  
-      <property-ui type="checkBox" default-value="true" label="Host key Verify" description="Unselected to turn off host key verify (Flag of --no-host-key-verify)"/>
-    </property>      
-    <property name="port">  
-      <property-ui type="textBox" label="SSH Port" description="The port SSH uses."/>
-    </property>      
+    </property>   
+    <property name="user">
+      <property-ui type="textBox" label="User Name" description="The SSH user name."/>
+    </property> 
     <property name="password">  
       <property-ui type="secureBox" label="SSH Password" description="The SSH password. This can be used to pass the password directly on the command line. If this option is not specified (and a password is required) Knife will prompt for the password."/>
-    </property>      
-    <property name="prerelease">  
-      <property-ui type="checkBox" label="Prerelease" description="Indicates that pre-release gems should be installed."/>
-    </property>      
-    <property name="runList">  
-      <property-ui type="textBox" label="Run List" description="A comma-separated list of roles and/or recipes to be applied."/>
-    </property>      
-    <property name="secret">  
-      <property-ui type="textAreaBox" label="Secret" description="The encryption key that is used for values contained within a data bag item."/>
-    </property>      
-    <property name="secretFile">  
-      <property-ui type="textBox" label="Secret File" description="The path to the file that contains the encryption key."/>
-    </property>      
+    </property>  
+<property name="useSudoPassword">
+      <property-ui type="checkBox" label="Use Sudo Password" description="Indicates that a bootstrap operation is done using sudo, with the password specified by the -P (or --ssh-password) option."/>
+    </property>
     <property name="sudo">
       <property-ui type="checkBox" label="Sudo" description="Check to have bootstrap operation execute using sudo."/>
     </property>      
     <property name="sudoPassword">
       <property-ui type="secureBox" label="Sudo Password" description="Enter sudo password if Use Sudo Password is not marked and Sudo is marked."/>
+    </property>               
+    <property name="forwarding">  
+      <property-ui type="checkBox" hidden="true" label="SSH forwarding" description="Check to indaicated that SSh agent forwarding is enabled."/>
+    </property>      
+    <property name="proxyUrl">  
+      <property-ui type="textBox" hidden="true" label="Proxy Url" description="The proxy server for the node that is the target of a bootstrap operation."/>
+    </property>      
+    <property name="version">  
+      <property-ui type="textBox" hidden="true" label="Chef Version" description="The version of the chef-client to install."/>
+    </property>      
+    <property name="distro">  
+      <property-ui type="textBox" hidden="true" label="Distributions" description="The template file to be used during a bootstrap operation. The following distributions are supported: chef-full (the default bootstrap), centos5-gems, fedora13-gems, ubuntu10.04-gems, ubuntu10.04-apt, ubuntu12.04-gems, and the name of a custom bootstrap template file. When this option is used, Knife will search for the template file in the following order: the bootstrap/ folder in the current working directory, the bootstrap/ folder in the chef-repo, the bootstrap/ folder in the ~/.chef/ directory, or a default bootstrap file. Do not use the --template-file option when --distro is specified."/>
+    </property>      
+    <property name="gateway">  
+      <property-ui type="textBox" hidden="true" label="SSH Gateway" description="The SSH tunnel or gateway that is used to run a bootstrap action on a machine that is not accessible from the workstation."/>
+    </property>      
+    <property name="hint">  
+      <property-ui type="textBox" hidden="true" label="Hint" description="HINT_NAME[=HINT_FILE] An Ohai hint to be set on the target of the bootstrap. The hint is contained in a file and is formatted as JSON: {'attribute':'value','attribute':'value'...}. HINT_NAME is the name of the hint and HINT_FILE is the name of the hint file located at /etc/chef/ohai/hints/HINT_FILE.json. Use multiple --hint options in the command to specify multiple hints."/>
+    </property>      
+    <property name="identity">  
+      <property-ui type="textBox" hidden="true" label="Identity File" description="The SSH identity file used for authentication. Key-based authentication is recommended."/>
+    </property>      
+    <property name="jsonAttr">  
+      <property-ui type="textAreaBox" hidden="true" label="Json Attributes" description="A JSON string that is added to the first run of a chef-client."/>
+    </property>      
+    <property name="name">  
+      <property-ui type="textBox" label="Node Name" description="The name of the node."/>
+    </property>      
+    <property name="hostKeyVerify">  
+      <property-ui type="checkBox" hidden="true" default-value="true" label="Host key Verify" description="Unselected to turn off host key verify (Flag of --no-host-key-verify)"/>
+    </property>      
+    <property name="port">  
+      <property-ui type="textBox" label="SSH Port" description="The port SSH uses."/>
+    </property>            
+    <property name="prerelease">  
+      <property-ui type="checkBox" hidden="true" label="Prerelease" description="Indicates that pre-release gems should be installed."/>
+    </property>      
+    <property name="runList">  
+      <property-ui type="textBox" label="Run List" description="A comma-separated list of roles and/or recipes to be applied."/>
+    </property>      
+    <property name="secret">  
+      <property-ui type="textAreaBox" hidden="true" label="Secret" description="The encryption key that is used for values contained within a data bag item."/>
+    </property>      
+    <property name="secretFile">  
+      <property-ui type="textBox" hidden="true" label="Secret File" description="The path to the file that contains the encryption key."/>
     </property>      
     <property name="template">
-      <property-ui type="textBox" label="Template" description="The path to a template file that will be used during a bootstrap operation. Do not use the --distro option when --template-file is specified."/>
-    </property>      
-    <property name="useSudoPassword">
-      <property-ui type="checkBox" label="Use Sudo Password" description="Indicates that a bootstrap operation is done using sudo, with the password specified by the -P (or --ssh-password) option."/>
-    </property>      
-    <property name="user">
-      <property-ui type="textBox" label="User Name" description="The SSH user name."/>
+      <property-ui type="textBox" hidden="true" label="Template" description="The path to a template file that will be used during a bootstrap operation. Do not use the --distro option when --template-file is specified."/>
     </property>      
   </properties>
   <post-processing><![CDATA[
@@ -228,76 +228,7 @@
     </command>
   </step-type>
 
-  <step-type name="Create Role">
-    <description>
-    This will create a new role. A role is a way to define certain patterns and processes that exist across nodes in an organization as belonging to a single job function.
-    </description>
-    <properties>
-      <!-- Required Field -->
-      <property name="roleName" required="true">  
-        <property-ui type="textBox" label="Role Name" description="The name of the role to be created"/>
-      </property>
-      <!-- Optional Field -->
-      <property name="description" required="true">  
-        <property-ui type="textAreaBox" label="Role Description" description="The description of the role. This value will populate the description field for the role on the server."/>
-      </property>
-    </properties>
-    <post-processing><![CDATA[
-        if (properties.get("exitCode") != 0) {
-            properties.put("Status", "Failure");
-        }
-        else {
-            properties.put("Status", "Success");
-        }
-     ]]>
-    </post-processing>
 
-    <command program="${GROOVY_HOME}/bin/groovy">
-      <arg file="createRole.groovy"/>
-      <arg file="${PLUGIN_INPUT_PROPS}"/>
-      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
-    </command>  
-  </step-type>
-<!--
-  <step-type name=" User">
-    <description> Create a user.</description>
-    <properties>
-      <property name="name" required="true">  
-        <property-ui type="textBox" label="User name" description="Name of the user you wish to create."/>
-      </property>      
-      <property name="admin">  
-        <property-ui type="checkBox" label="Admin" description="Check to make user admin."/>
-      </property> 
-
-      <property name="fileName">  
-        <property-ui type="textBox" label="Path to private key" description="Filename in which to save the private key."/>
-      </property>     
-
-      <property name="password">  
-        <property-ui type="textBox" label="Password" description="The user password."/>
-      </property>
-
-      <property name="userKey">  
-        <property-ui type="textBox" label="Path to public key" description="Used to write the public key to a file."/>
-      </property>
-
-    </properties>
-    <post-processing><![CDATA[
-        if (properties.get("exitCode") != 0) {
-            properties.put("Status", "Failure");
-        }
-        else {
-            properties.put("Status", "Success");
-        }
-     ]]></post-processing>
-
-    <command program="${GROOVY_HOME}/bin/groovy">
-      <arg file="createUser.groovy"/>
-      <arg file="${PLUGIN_INPUT_PROPS}"/>
-      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
-    </command> 
-  </step-type>
--->
 
   <step-type name="Delete Client">
     <description>
@@ -522,13 +453,13 @@
      ]]></post-processing>
 
     <command program="${GROOVY_HOME}/bin/groovy">
-      <arg file="GenericCommand.groovy"/>
+      <arg file="genericKnifeCommand.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
     
   </step-type>
-   <step-type name="Deploy chef">
+   <step-type name="Deploy Chef">
     <description>Deploy chef to a node.</description>
     <properties>
       <property name="query" required="true">
@@ -538,10 +469,10 @@
         <property-ui type="textBox" label="Enter SSH Login" description="Enter the ssh login for the nodes."/>
       </property>
       <property name="sshPasswd" required="true">
-        <property-ui type="textBox" label="Enter SSH Password" description="Enter the ssh password for the login."/>
+        <property-ui type="secureBox" label="Enter SSH Password" description="Enter the ssh password for the login."/>
       </property>
       <property name="sudoPasswd">
-        <property-ui type="textBox" label="Enter Sudo Password" description="Enter the password to allow for sudo on the nodes. If no password is given, the ssh password will be used instead"/>
+        <property-ui type="secureBox" label="Enter Sudo Password" description="Enter the password to allow for sudo on the nodes. If no password is given, the ssh password will be used instead"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -602,7 +533,7 @@
     <description>Upload a cookbook, role, environment, or data bag to the Chef server</description>
     <properties>
       <property name="uploadCookbookPattern" required="true">
-        <property-ui type="textBox" label="Pattern" description="Patern to upload."/>
+        <property-ui type="textBox" default-value="/" label="Pattern" description="Patern to upload."/>
       </property> 
       <property name="workingDir" required="true">
         <property-ui type="textBox" label="Directory" description="Directory to run the command from"/>

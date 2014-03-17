@@ -29,7 +29,7 @@ def proc = command.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.waitFor();
 
-println “sout: ${sout}”;
-println “serr: ${serr}”;
+println "sout: ${sout}";
+println "serr: ${serr}";
 
 System.exit(0);

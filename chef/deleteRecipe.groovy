@@ -20,6 +20,7 @@ try {
 } catch (Exception e){
 	System.err << "Error in deleting file: ${filePath}\n";
 	System.err << e.getMessage();
+	System.exit(1)
 }
 
-System.exit(proc.exitValue());
+System.exit(0);
