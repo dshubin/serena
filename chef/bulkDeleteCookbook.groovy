@@ -19,7 +19,7 @@ def serr = new StringBuffer();
 def purgeCMD = ""
 
 if(purge){
-	purgeCMD = " -p"
+	purgeCMD = " -p --yes"
 }
 
 def deployCommand = "knife cookbook bulk delete ${regex}${purgeCMD}"

@@ -54,7 +54,7 @@ if(gateway){
 	deployCommand = deployCommand + " -G ${gateway}"
 }
 if(hint){
-	deployCommand = deployCommand + " --hit ${hint}"
+	deployCommand = deployCommand + " --hint ${hint}"
 }
 if(identity){
 	deployCommand = deployCommand + " -i ${identity}"
@@ -110,7 +110,7 @@ if(sudo && !useSudoPassword){
 }
 proc.waitFor();
 
-
+println deployCommand;
 println "sout: ${sout}"
 println "serr: ${serr}"
 

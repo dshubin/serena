@@ -23,7 +23,7 @@ if(after){
 afterCMD = " -a ${after}"
 }
 
-def deployCommand = "knife node run_list add ${name} ${runList}${after}"
+def deployCommand = "knife node run_list add ${name} ${runList} ${afterCMD}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.waitFor()
@@ -31,4 +31,4 @@ proc.waitFor()
 println "sout: ${sout}"
 println "serr: ${serr}"
 
-System.exit(0);
+System.exit(proc.exitValue());

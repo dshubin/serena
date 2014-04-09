@@ -25,12 +25,13 @@ if(all){
 	allCmd = " -a"
 }
 if(purge){
-	purgeCmd = " -p"
+	purgeCmd = " -p --yes"
 }
 
 def deployCommand = "knife cookbook delete ${name} ${version}${allCmd}${purgeCmd}"
 def proc = deployCommand.execute();
 proc.consumeProcessOutput(sout, serr);
+
 proc.withWriter { writer ->
         writer << "y"
 }

@@ -29,7 +29,7 @@ if(cookbookVersion){
 	command = command + " ${cookbookVersion}";
 }
 if(useCurrentBranch){
-	command = command + " --user-current-branch";
+	command = command + " --use-current-branch";
 }
 if(defaultBranchName){
 	command = command + " --branch ${defaultBranchName}";
