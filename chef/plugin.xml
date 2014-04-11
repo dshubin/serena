@@ -3,17 +3,20 @@
   <header>
     <identifier id="com.serena.air.plugin.UCSC" name="Chef" version="1"/>
     <description>
-         Manage Chef
+         Steps for interfacing with a Chef server.
     </description>
     <tag>Serena/Third Party/Chef</tag>
   </header>
 
 <step-type name="Bootstrap Node">
-  <description> This will will install chef on the given client.</description>
+  <description> This will install chef on the given client, and run that node's run list.</description>
   <properties>
     <property name="target" required="true">  
       <property-ui type="textBox" label="FQDN or IP address" description="FQDN or IP address of target computer."/>
-    </property>   
+    </property>
+    <property name="name">  
+      <property-ui type="textBox" label="Node Name" description="The name of the node."/>
+    </property>     
     <property name="user">
       <property-ui type="textBox" label="SSH User Name" description="The SSH user name."/>
     </property> 
@@ -52,10 +55,7 @@
     </property>      
     <property name="jsonAttr">  
       <property-ui type="textAreaBox" hidden="true" label="Json Attributes" description="A JSON string that is added to the first run of a chef-client."/>
-    </property>      
-    <property name="name">  
-      <property-ui type="textBox" label="Node Name" description="The name of the node."/>
-    </property>      
+    </property>          
     <property name="hostKeyVerify">  
       <property-ui type="checkBox" hidden="true" default-value="true" label="Host key Verify" description="Unselected to turn off host key verify (Flag of --no-host-key-verify)"/>
     </property>      
@@ -66,7 +66,7 @@
       <property-ui type="checkBox" hidden="true" label="Prerelease" description="Indicates that pre-release gems should be installed."/>
     </property>      
     <property name="runList">  
-      <property-ui type="textBox" label="Run List" description="A comma-separated list of roles and/or recipes to be applied."/>
+      <property-ui type="textBox" label="Run List" description="A comma-separated list of roles and/or recipes to be added to this node's run-list once it is has been bootstrapped."/>
     </property>      
     <property name="secret">  
       <property-ui type="textAreaBox" hidden="true" label="Secret" description="The encryption key that is used for values contained within a data bag item."/>
@@ -125,10 +125,10 @@
   </step-type>
 
 <step-type name="Delete Clients Bulk">
-  <description> This will delete clientss in bulk.</description>
+  <description> This will delete clients from the Chef server in bulk.</description>
   <properties>
     <property name="regex" required="true">  
-      <property-ui type="textBox" label="Enter regular expression" description="Regular expression to delete multiple cookbooks."/>
+      <property-ui type="textBox" label="Regular Expression" description="Regular expression to delete multiple cookbooks."/>
     </property>      
   </properties>
   <post-processing><![CDATA[
@@ -148,13 +148,13 @@
 </step-type>
 
 <step-type name="Delete Cookbooks Bulk">
-  <description> This will delete cookbooks in bulk.</description>
+  <description> This will delete cookbooks from the Chef server in bulk.</description>
   <properties>
     <property name="regex" required="true">  
-      <property-ui type="textBox" label="Enter regular expression" description="Regular expression to delete multiple cookbooks."/>
+      <property-ui type="textBox" label="Regular Expression" description="Regular expression to delete multiple cookbooks."/>
     </property>      
     <property name="purge">  
-      <property-ui type="checkBox" label="Purge" description="Optional. Completly remove cookbooks from the server."/>
+      <property-ui type="checkBox" label="Purge" description="Completely remove cookbooks from the server. This will cause any other cookbooks that reference the deleted cookbooks to be disabled."/>
     </property>     
   </properties>
   <post-processing><![CDATA[
@@ -174,10 +174,10 @@
 </step-type>
 
 <step-type name="Delete Nodes Bulk">
-  <description> This will delete nodes in bulk.</description>
+  <description>This will delete nodes from the Chef server in bulk.</description>
   <properties>
     <property name="regex" required="true">  
-      <property-ui type="textBox" label="Enter regular expression" description="Regular expression to delete multiple nodes."/>
+      <property-ui type="textBox" label="Regular Expression" description="Regular expression to delete multiple nodes."/>
     </property>      
   </properties>
   <post-processing><![CDATA[
@@ -200,16 +200,16 @@
     <description> Create a recipe.</description>
     <properties>
       <property name="name" required="true">  
-        <property-ui type="textBox" label="Recipe name" description="Name of the recipe you wish to create."/>
+        <property-ui type="textBox" label="Recipe File Name" description="Name of the recipe you wish to create. Make sure to include the extension of the file."/>
       </property>      
       <property name="path" required="true">  
-        <property-ui type="textBox" label="Recipe path" description="Path to the location where the recipe will be saved."/>
+        <property-ui type="textBox" label="Recipe Path" description="Path to the location where the recipe will be saved."/>
       </property>      
       <property name="contents" required="true">  
-        <property-ui type="textAreaBox" label="Recipe contents" description="The code that will go into the recipe."/>
+        <property-ui type="textAreaBox" label="Recipe Contents" description="The code that will go into the recipe."/>
       </property>      
       <property name="overwrite">  
-        <property-ui type="checkBox" default-value="true" label="Overwrite" description="If selected, overwrite the recipe if it exists."/>
+        <property-ui type="checkBox" default-value="true" label="Overwrite" description="Overwrite the recipe if it exists."/>
       </property>      
     </properties>
     <post-processing><![CDATA[
@@ -232,12 +232,12 @@
 
   <step-type name="Delete Client">
     <description>
-    This will delete a client at a given file location.
+    This will delete a client from the Chef server.
     </description>
     <properties>
       <!-- Required Field -->
       <property name="Client" required="true">  
-        <property-ui type="textBox" label="Client Name" description="The name of the client to be deleted"/>
+        <property-ui type="textBox" label="Client Name" description="The name of the client to be deleted."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -259,19 +259,19 @@
 
 
 <step-type name="Delete Cookbook">
-  <description> This will be used to delete one or more cookbooks.</description>
+  <description> This will delete a cookbook from the Chef server.</description>
   <properties>
     <property name="name" required="true">  
-      <property-ui type="textBox" label="Enter cookbook name" description="Deletes the given cookbook."/>
+      <property-ui type="textBox" label="Cookbook Name" description="This is the name of the cookbook to be deleted."/>
     </property>      
     <property name="version">  
-      <property-ui type="textBox" label="Version" description="Optional. Enter the version of the cookbook you want to delete."/>
+      <property-ui type="textBox" label="Version" description="This is the version of the cookbook you want to delete."/>
     </property>     
     <property name="all">  
-      <property-ui type="checkBox" label="Delete All" description="Optional. Delete every version of the cookbook."/>
+      <property-ui type="checkBox" label="Delete All" description="Delete every version of the cookbook."/>
     </property> 
     <property name="purge">  
-      <property-ui type="checkBox" label="Purge" description="Optional. Completely remove cookbook from the server."/>
+      <property-ui type="checkBox" label="Purge" description="Completely remove the cookbook from the server. This will disable any other cookbooks that reference any files in the cookbook that is being deleted."/>
     </property> 
   </properties>
   <post-processing><![CDATA[
@@ -291,10 +291,10 @@
 </step-type>
 
 <step-type name="Delete Node">
-  <description> This will be used to delete a node.</description>
+  <description> Deletes a node from the Chef server.</description>
   <properties>
     <property name="nodeName" required="true">  
-      <property-ui type="textBox" label="Enter node name" description="Deletes the given node."/>
+      <property-ui type="textBox" label="Node Name" description="Name of the node to be deleted."/>
     </property>           
   </properties>
   <post-processing><![CDATA[
@@ -315,12 +315,12 @@
 
   <step-type name="Delete Recipe">
     <description>
-    This will delte a recipe at a given file location.
+    This will delete a recipe at a given file location.
     </description>
     <properties>
       <!-- Required Field -->
       <property name="filePath" required="true">  
-        <property-ui type="textBox" label="Recipe File Path" description="The file path of the recipe to be deleted"/>
+        <property-ui type="textBox" label="Recipe File Path" description="The file path of the recipe to be deleted."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -411,7 +411,7 @@
   </step-type>
 
   <step-type name="Run-List Remove">
-    <description> Remove from the run-list of a Node.</description>
+    <description> Remove an item from the run-list of a Node.</description>
     <properties>
       <property name="name" required="true">  
         <property-ui type="textBox" label="Node Name" description="Name of the node you wish to update."/>
@@ -437,10 +437,10 @@
   </step-type>
 
   <step-type name="Generic Knife Command">
-    <description>This step will allow you to execute any knife command onto the chef server.</description>
+    <description>This step will allow you to execute any knife command.</description>
     <properties>
       <property name="Command" required="true">
-        <property-ui type="textAreaBox" label="Enter Command" description="Enter Knife command you wish to run. The command 'knife client list' enter 'client list'"/>
+        <property-ui type="textAreaBox" label="Enter Command" description="Enter Knife command you wish to run, without 'knife' at the beginning. To get the command 'knife client list', enter 'client list'"/>
       </property>       
     </properties>
     <post-processing><![CDATA[
@@ -463,16 +463,16 @@
     <description>Deploy chef to a node.</description>
     <properties>
       <property name="query" required="true">
-        <property-ui type="textBox" label="Enter Query" description="Enter the query for nodes you want to deploy too."/>
+        <property-ui type="textBox" label="Enter Query" description="The query to get nodes you want to deploy to."/>
       </property>
       <property name="sshLogin" required="true">
-        <property-ui type="textBox" label="Enter SSH Login" description="Enter the ssh login for the nodes."/>
+        <property-ui type="textBox" label="Enter SSH Login" description="Enter the SSH login for the nodes."/>
       </property>
       <property name="sshPasswd" required="true">
-        <property-ui type="secureBox" label="Enter SSH Password" description="Enter the ssh password for the login."/>
+        <property-ui type="secureBox" label="Enter SSH Password" description="Enter the SSH password for the login."/>
       </property>
       <property name="sudoPasswd">
-        <property-ui type="secureBox" label="Enter Sudo Password" description="Enter the password to allow for sudo on the nodes. If no password is given, the ssh password will be used instead"/>
+        <property-ui type="secureBox" label="Enter Sudo Password" description="Enter the password to allow for sudo on the nodes. If no password is given, the SSH password will be used instead"/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -495,22 +495,29 @@
     <description>Create a new Cookbook on the Chef server</description>
     <properties>
       <property name="createCookbookName" required="true">
-        <property-ui type="textBox" label="Cookbook Name" description="Enter the name of the Cookbook you want to create."/>
+        <property-ui type="textBox" label="Cookbook Name" description="This is the name of the Cookbook you want to create."/>
       </property> 
       <property name="createCookbookCopyrightHolder" required="false">
-        <property-ui type="textBox" label="Copyright Holder" description="Enter the name of the copyright holder for this cookbook."/>
+        <property-ui type="textBox" label="Copyright Holder" description="This is the name of the copyright holder for this cookbook."/>
       </property>
       <property name="createCookbookLicense" required="false">
-        <property-ui type="textBox" label="Type of license" description="Enter the type of license under which the cookbook is distributed."/>
+        <property-ui type="selectBox" default-value="none" label="Type of license" description="This is the type of license under which the cookbook is distributed."/>
+	<value label = "Apache v2.0">apachev2</value>
+	<value label = "GPL v2">gplv2</value>
+	<value label = "GPL v3">gplv3</value>
+	<value label = "MIT">mit</value>
+	<value label = "None - All Rights Reserved">none</value>
       </property> 
       <property name="createCookbookEmail" required="false">
-        <property-ui type="textBox" label="Email of owner" description="Enter the email of the individual who maintains this cookbook."/>
+        <property-ui type="textBox" label="Email of owner" description="This is the email of the individual who maintains this cookbook."/>
       </property>
       <property name="createCookbookPath" required="false">
-        <property-ui type="textBox" label="Cookbook Path" description="Enter the directory where the cookbook will be created."/>
+        <property-ui type="textBox" label="Cookbook Path" description="This is the directory where the cookbook will be created."/>
       </property> 
       <property name="createCookbookFormat" required="false">
-        <property-ui type="textBox" label="Documentation Format" description="Enter type of document format of the readme file."/>
+        <property-ui type="selectBox" default-value ="md" label="Documentation Format" description="This is the document format of the readme file."/>
+	<value label=".md">md</value>
+	<value label = ".rdoc">rdoc</value>
       </property>         
     </properties>
     <post-processing><![CDATA[
@@ -530,13 +537,13 @@
   </step-type>
 
 <step-type name="Upload">
-    <description>Upload a cookbook, role, environment, or data bag to the Chef server</description>
+    <description>Upload a cookbook, role, environment, or data bag to the Chef server.</description>
     <properties>
       <property name="uploadCookbookPattern" required="true">
-        <property-ui type="textBox" default-value="/" label="Pattern" description="Patern to upload."/>
+        <property-ui type="textBox" default-value="/" label="Pattern" description="Pattern to upload."/>
       </property> 
       <property name="workingDir" required="true">
-        <property-ui type="textBox" label="Directory" description="Directory to run the command from"/>
+        <property-ui type="textBox" label="Directory" description="Directory to run the command from. Most commonly the Chef repo."/>
       </property> 
       <property name="uploadConcurrency" required="false">
         <property-ui type="textBox" label="Number of concurrent connections allowed" description="This is the maximum number of concurrent connections allowed. If left blank, the default is 10."/>
@@ -560,7 +567,10 @@
         <property-ui type="checkBox" label="Disable recursive uploading of the directory" description="Disables the recursive uploading of the directory."/>
       </property>  
       <property name="uploadRepoMode" required="false">
-        <property-ui type="textBox" label="Local Chef-repo Layout" description="This is the layout of the local chef repo. Possible values are: static, everything, or hosted_everything."/>
+        <property-ui type="selectBox" default-value="everything" label="Local Chef-repo Layout" description="This is the layout of the local chef repo. Possible values are: static, everything, or hosted_everything."/>
+	<value label = "Everything">everything</value>
+	<value label = "Hosted Everything">hosted_everything</value>
+	<value label = "Static">static</value>
       </property>           
     </properties>
     <post-processing><![CDATA[
@@ -580,7 +590,7 @@
   </step-type>
 
 <step-type name="Delete Role">
-    <description>Delete a single role.</description>
+    <description>Delete a single role from the Chef server.</description>
     <properties>
       <property name="deleteRoleName" required="true">
         <property-ui type="textBox" label="Role Name" description="This is the name of the role which will be deleted."/>
@@ -603,10 +613,10 @@
   </step-type>
   
    <step-type name="Delete Roles Bulk">
-    <description>Delete a set of roles.</description>
+    <description>Delete a set of roles from the Chef server.</description>
     <properties>
       <property name="deleteRoleREGEX" required="true">
-        <property-ui type="textBox" label="Regular Expression" description="This is the regular expression which will define which role to delete."/>
+        <property-ui type="textBox" label="Regular Expression" description="This is the regular expression which will define which role(s) to delete."/>
       </property>
     </properties>
     <post-processing><![CDATA[

@@ -16,7 +16,7 @@ def sout = new StringBuffer();
 def serr = new StringBuffer();
 
 
-final def command = "knife role delete ${REGEX}";
+final def command = "knife role bulk delete ${REGEX}";
 
 def proc = command.execute();
 proc.consumeProcessOutput(sout, serr);

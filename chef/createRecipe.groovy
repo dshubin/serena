@@ -21,17 +21,17 @@ def filePath = path + name
 try {
     def file = new File(filePath).canonicalFile
     if (file.exists() && !overwrite) {
-        println "File $file already exists!"
-        System.exit 1
+        println "File ${file} already exists!"
+        System.exit(1);
     }
     else {
         file.write(contents)
-        println "Successfully ${overwrite?'replaced':'created'} file $file with contents:"
+        println "Successfully ${overwrite?'replaced':'created'} file ${file} with contents:"
         println contents
     }
 }
 catch (Exception e) {
-    println "Error creating file $fileName: ${e.message}"
+    println "Error creating file ${fileName}: ${e.message}"
     System.exit(1)
 }
 System.exit(0);

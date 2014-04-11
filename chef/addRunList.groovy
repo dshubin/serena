@@ -17,7 +17,7 @@ final def after = props["after"]
 
 def sout = new StringBuffer();
 def serr = new StringBuffer();
-def afterCmd = ""
+def afterCMD = ""
 
 if(after){
 afterCMD = " -a ${after}"
