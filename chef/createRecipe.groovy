@@ -12,14 +12,12 @@ try {
 }
 
 final def name = props["name"]
-final def path = props["path"]
 final def contents = props["contents"]
 final def overwrite = props["overwrite"]?.toBoolean()
 
-def filePath = path + name
 
 try {
-    def file = new File(filePath).canonicalFile
+    def file = new File(name).canonicalFile
     if (file.exists() && !overwrite) {
         println "File ${file} already exists!"
         System.exit(1);
@@ -31,7 +29,7 @@ try {
     }
 }
 catch (Exception e) {
-    println "Error creating file ${fileName}: ${e.message}"
+    println "Error creating file ${name}: ${e.message}"
     System.exit(1)
 }
 System.exit(0);

@@ -18,10 +18,12 @@ final def contents = props["roleContents"]
 def sout = new StringBuffer();
 def serr = new StringBuffer();
 
-def file = new File("/tmp/temp.json").canonicalFile;
-file.write(contents);
 if(select == "textbox")
-	path = "/tmp/temp.json";
+{
+	def file = new File("temp.json").canonicalFile;
+	file.write(contents);
+	path = "temp.json";
+}
 
 def command = "knife role from file ${path}"
 
@@ -29,7 +31,11 @@ def proc = command.execute();
 proc.consumeProcessOutput(sout, serr);
 proc.waitFor();
 
-file.delete();
+if(select == "textbox")
+{
+	def file = new File("temp.json")
+	file.delete();
+}
 
 
 println "sout: ${sout}";

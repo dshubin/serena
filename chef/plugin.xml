@@ -24,7 +24,7 @@
       <property-ui type="secureBox" label="SSH Password" description="The SSH password. This can be used to pass the password directly on the command line. If this option is not specified (and a password is required) Knife will prompt for the password."/>
     </property>  
 <property name="useSudoPassword">
-      <property-ui type="checkBox" label="SSH password as Sudo Password" description="Indicates that a bootstrap operation is done using sudo, with the password specified by the SSH password."/>
+      <property-ui type="checkBox" label="Use SSH password as Sudo Password" description="Indicates that a bootstrap operation is done using sudo, with the password specified by the SSH password."/>
     </property>
     <property name="sudo">
       <property-ui type="checkBox" label="Run as Sudo" description="Check to have bootstrap operation execute using sudo."/>
@@ -200,11 +200,8 @@
     <description> Create a recipe.</description>
     <properties>
       <property name="name" required="true">  
-        <property-ui type="textBox" label="Recipe File Name" description="Name of the recipe you wish to create. Make sure to include the extension of the file."/>
-      </property>      
-      <property name="path" required="true">  
-        <property-ui type="textBox" label="Recipe Path" description="Path to the location where the recipe will be saved."/>
-      </property>      
+        <property-ui type="textBox" label="Recipe Full File Path" description="Path and name of the recipe you wish to create. Make sure to include the extension of the file."/>
+      </property>        
       <property name="contents" required="true">  
         <property-ui type="textAreaBox" label="Recipe Contents" description="The code that will go into the recipe."/>
       </property>      
@@ -436,19 +433,19 @@
     </command>  
   </step-type>
 
-  <step-type name="Create Role">
-    <description>Creates a role on the Chef server.</description>
+  <step-type name="Create or Edit Role">
+    <description>Creates a role or edits an existing role on the Chef server.</description>
     <properties>
       <property name="select" required="true">  
         <property-ui type="selectBox" default-value="file" label="JSON Data Source" description="Use to choose between using the text box below to type out your own JSON data, or to load it from a file."/>
-	<value label = "Use Text Box">textbox</value>
-	<value label = "Use File">file</value>
+	<value label = "Create New File">textbox</value>
+	<value label = "Use Existing File">file</value>
       </property>      
       <property name="roleContents" required="false">  
-        <property-ui type="textAreaBox" label="Role JSON Data" description="The JSON data that will describe the new/edited role."/>
+        <property-ui type="textAreaBox" label="JSON Data For New File" description="The JSON data that will describe the new/edited role."/>
       </property> 
       <property name="filePath" required="false">  
-        <property-ui type="textBox" label="File Path" description="The path to the JSON file which will describe the new role that is created."/>
+        <property-ui type="textBox" label="Existing File Path" description="The path to the JSON file which will describe the new role that is created."/>
       </property>      
     </properties>
     <post-processing><![CDATA[
